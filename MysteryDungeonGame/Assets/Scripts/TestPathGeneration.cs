@@ -5,10 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class TestPathGeneration : MonoBehaviour
 {
+    public static TestPathGeneration PathGenerator;
+
     private int numberExamples = 0;
-    private int GridSize = 16;
-    private int MinMoves = 128;
-    private int MaxMoves = 256;
+
+    [System.NonSerialized]
+    public int GridSize = 32;
+    private int MinMoves;
+    private int MaxMoves;
     private bool hit = false;
     private List<Node> ListOfNodes = new List<Node>();
     private List<int> nodesVisited = new List<int> { };
@@ -16,22 +20,38 @@ public class TestPathGeneration : MonoBehaviour
 
     private int offset;
 
+    public Tile [] tiles;
+    public Tile startTile;
+    public Tilemap tilemap;
     [SerializeField]
-    private Tile tile;
+    private TextAsset Paths;
     [SerializeField]
-    private Tilemap tilemap;
+    private GameObject playerController;
 
+    public List<Vector3Int> tilesInMap;
+
+    private void Awake()
+    {
+        if (PathGenerator == null)
+        {
+            PathGenerator = this;
+        }
+        else if (PathGenerator != this)
+        {
+            Destroy(this);
+        }
+    }
     void Start()
     {
-        offset = GridSize + 2;
-        //for (int i = 0; i < 10; i++)
+        MaxMoves = sqr(GridSize);
+        MinMoves = sqr(GridSize) / 2;
+        offset = -(GridSize / 2);
+        //offset = GridSize + 2;
+        //while (!minNodesReached)
         //{
-        //GridSize = Random.Range(2, 33);
-        while (!minNodesReached)
-        {
-            createList();
-        }
+        //    createList();
         //}
+        loadLevel();
     }
 
     //generate gridsize squared nodes.
@@ -41,9 +61,20 @@ public class TestPathGeneration : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
+    public void loadLevel()
+    {
+        PlayerMovement.Player.NextLevelButton.gameObject.SetActive(false);
+        PlayerMovement.Player.moveCount = 0;
+        tilesInMap.Clear();
+        nodesVisited.Clear();
+        tilemap.ClearAllTiles();
+        splitInputFile();
+    }
+
+    #region Random Generation
     private void createList()
     {
         ListOfNodes.Clear();
@@ -99,7 +130,6 @@ public class TestPathGeneration : MonoBehaviour
                     removeUsedNode(Prev);                       
 
                     Temp = ListOfNodes[next - 1];
-                    //path += Temp.value + ", ";
                     nodesVisited.Add(Temp.value);
                 }
             }
@@ -120,23 +150,49 @@ public class TestPathGeneration : MonoBehaviour
             generateTilemap();
         }      
     }
+    #endregion
 
     public void generateTilemap()
     {
+        int count = 0;
         foreach (int value in nodesVisited)
         {
             int x, y;
             y = ((value - 1) / GridSize);
             x = (value -1)-(y * GridSize);
-            Debug.Log("Coordinate for Node " + value + ":" + x + ", " + y);
-            tilemap.SetTile(new Vector3Int(x + (offset * numberExamples), y, 0), tile);
             if (nodesVisited.IndexOf(value) == 0)
             {
-                tile.color = Color.cyan;
+                tilemap.SetTile(new Vector3Int(x + offset, y + offset, 0), startTile);
+                
+
+                PlayerMovement.Player.transform.position = new Vector3(x + (offset), y + (offset), playerController.transform.position.z);
+                PlayerMovement.Player.previousPosition = new Vector3Int((int)PlayerMovement.Player.transform.position.x, (int)PlayerMovement.Player.transform.position.y, (int)PlayerMovement.Player.transform.position.z);
+                PlayerMovement.Player.playerStartPosition = PlayerMovement.Player.previousPosition;
             }
-        }
-        tile.color = Color.white;
+            else
+            {
+                tilemap.SetTile(new Vector3Int(x + offset, y + offset , 0), tiles[Random.Range(0,tiles.Length)]);
+            }
+            tilesInMap.Add(new Vector3Int(x + offset, y + offset, 0));
+            count++;
+        }       
     }
+
+    #region Readin
+    public void splitInputFile()
+    {
+        string[] allPaths;
+        allPaths = (Paths.text.Split('\n'));
+        int random = Random.Range(0, allPaths.Length-1);
+        //Debug.Log(random+1);
+        string [] path = allPaths[random].Split(',');
+        for (int i = 0; i < path.Length-1; i++)
+        {
+            nodesVisited.Add(int.Parse(path[i]));
+        }
+        generateTilemap();
+    }
+    #endregion
 
     #region MathsFunctions
     private int sqr(int value)
