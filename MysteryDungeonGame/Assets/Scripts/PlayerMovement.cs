@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         MovePlayer(1,0);
                     }
-                    else if (Input.GetKeyDown(KeyCode.Q) && gameObject.transform.position != playerStartPosition)
+                    else if (Input.GetKey(KeyCode.Q) && gameObject.transform.position != playerStartPosition)
                     {
                         MoveToPrevious();
                     }
@@ -132,7 +132,6 @@ public class PlayerMovement : MonoBehaviour
             }
             previousPosition = nextPosition;
             objectToMove.transform.position = end;           
-            yield return new WaitForSeconds(.025f);
             moving = false;
             if (TestPathGeneration.PathGenerator.tilesInMap.Count == 1)
             {
