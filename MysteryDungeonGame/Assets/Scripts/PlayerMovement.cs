@@ -124,9 +124,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponentInChildren<SpriteRenderer>().flipX = true;
             }
-            while (elapsedTime < (2f / 3f))
+            while (elapsedTime < (1f / 2f))
             {
-                objectToMove.transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / (2f / 3f)));
+                objectToMove.transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / (1f / 2f)));
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }

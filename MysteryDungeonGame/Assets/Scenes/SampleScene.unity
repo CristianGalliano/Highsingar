@@ -614,7 +614,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515208590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 126.2168}
+  m_LocalPosition: {x: 0.5, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1753101840}
@@ -656,7 +656,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -987,17 +987,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: c52b5c0a832669343a4d64ab265f57b4, type: 2}
-  - {fileID: 11400000, guid: d31b3b6f59d5f384581ae5a27a17104e, type: 2}
-  - {fileID: 11400000, guid: c350791451dc6c54390f720c06eb3745, type: 2}
-  - {fileID: 11400000, guid: ef6bbbf50bf712a4294ea3d1c50a3abd, type: 2}
-  - {fileID: 11400000, guid: c2e87400b9f3c384ba58ba12574f4ea1, type: 2}
-  - {fileID: 11400000, guid: fff45aecd8a97764e9a3c953aee0967c, type: 2}
-  - {fileID: 11400000, guid: c0e4a83a5d7519249895a16fbc34437d, type: 2}
-  - {fileID: 11400000, guid: 3f02c5cd838eb77468e72530f9974285, type: 2}
+  - {fileID: 11400000, guid: db000868b080be24987629a643e08ac5, type: 2}
+  - {fileID: 11400000, guid: 6b453c7f0f7839e428a40c5796b47f1e, type: 2}
+  - {fileID: 11400000, guid: 1d38a86380f62e041967a61f13ce2138, type: 2}
+  - {fileID: 11400000, guid: bf9916d2f2686e24da6bdceef77d50dc, type: 2}
+  - {fileID: 11400000, guid: 074f925ae481cc343b436380884b5a46, type: 2}
+  - {fileID: 11400000, guid: 5490d7d0c1f7e6b459b2693f191bcb30, type: 2}
+  - {fileID: 11400000, guid: 94c20051a3476ce4dab9712b654c628a, type: 2}
+  - {fileID: 11400000, guid: 57c411816f6dbb54d9c0c98d18b49cfe, type: 2}
+  - {fileID: 11400000, guid: 6a1b7f9068d411d40afc831d409d98cf, type: 2}
+  - {fileID: 11400000, guid: ae7d71577b082994e9be4127096cb5b7, type: 2}
+  - {fileID: 11400000, guid: aa285d4e36a785c49a7c7843908625b1, type: 2}
+  - {fileID: 11400000, guid: cde5301b1af50fd43b2c573a5d8ed14b, type: 2}
+  - {fileID: 11400000, guid: 711bc49ed4551424a95a804a6d548337, type: 2}
+  - {fileID: 11400000, guid: 82b7651b32658d34abbe13ffde8f94c4, type: 2}
+  - {fileID: 11400000, guid: de384d2592237b74f8e14f39eccc664b, type: 2}
+  - {fileID: 11400000, guid: a5d7931b5eb73a24d8b49aff08604118, type: 2}
   startTile: {fileID: 11400000, guid: 7c0c2dee8c1c9344e832ef86d321954a, type: 2}
   tilemap: {fileID: 864258943}
-  Paths: {fileID: 4900000, guid: 93564eaef2afbfc41b45ea6625e480b5, type: 3}
+  Paths: {fileID: 4900000, guid: b765e62f5a926b140a6958050a7c7d05, type: 3}
   playerController: {fileID: 1753101838}
   tilesInMap: []
 --- !u!156049354 &785505298

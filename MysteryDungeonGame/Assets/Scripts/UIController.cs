@@ -51,7 +51,7 @@ public class UIController : MonoBehaviour
             }
             else
             {
-                StartCoroutine(AdjustCamera(PlayerMovement.Player.transform, 5f));
+                StartCoroutine(AdjustCamera(PlayerMovement.Player.transform.GetChild(0).transform, 5f));
             }
         }
         else

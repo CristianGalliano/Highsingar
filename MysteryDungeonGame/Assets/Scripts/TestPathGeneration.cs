@@ -10,7 +10,7 @@ public class TestPathGeneration : MonoBehaviour
     private int numberExamples = 0;
 
     [System.NonSerialized]
-    public int GridSize = 32;
+    public int GridSize = 16;
     private int MinMoves;
     private int MaxMoves;
     private bool hit = false;
