@@ -6,7 +6,6 @@ ScriptsOnlyBuild:
     - UIController
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
-    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -81,9 +80,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13128}
     - Class: 114
-      Script: {instanceID: 13588}
+      Script: {instanceID: 13590}
     - Class: 114
-      Script: {instanceID: 14062}
+      Script: {instanceID: 14096}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -415,7 +414,7 @@ ScriptsOnlyBuild:
     className: AnalyticsEventTrackerEditor
   - hash:
       serializedVersion: 2
-      Hash: 369a318630478408c93a97d67666a829
+      Hash: 73c0d571ed002bca403e238ee11680ba
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
