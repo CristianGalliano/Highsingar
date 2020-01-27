@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour
     private Queue<string> sentences;
     private Dialogue currentDialogue;
 
+    private bool closingShop = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        PlayerHubMovement.HubPlayer.canMove = false;
+        closingShop = false;
         currentDialogue = dialogue;
         dialoguePanel.SetActive(true);
         dialogueBoxAnimator.SetBool("IsOpen", true);
@@ -47,7 +51,6 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
-
         string sentence = sentences.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeSentence(sentence));
@@ -63,7 +66,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {           
         StartCoroutine(CloseDialogueUI());
         Debug.Log("Finished Conversation.");
@@ -74,10 +77,36 @@ public class DialogueManager : MonoBehaviour
         dialogueBoxAnimator.SetBool("IsOpen", false);
         yield return new WaitForSeconds(0.5f);
         dialoguePanel.SetActive(false);
-        if (currentDialogue.IsShopKeeper)
+        if (currentDialogue.IsShopKeeper && !closingShop)
         {
             shopKeeperPanel.SetActive(true);
-            shopKeeperPanelAnimator.SetBool("IsOpen", true); 
+            shopKeeperPanelAnimator.SetBool("IsOpen", true);
         }
+        else
+        {
+            PlayerHubMovement.HubPlayer.canMove = true;
+        }
+    }
+
+    public void ShopClosedDialogue()
+    {
+        StartCoroutine(CloseShopWindow());
+    }
+
+    IEnumerator CloseShopWindow()
+    {
+        closingShop = true;
+        shopKeeperPanelAnimator.SetBool("IsOpen", false);
+        yield return new WaitForSeconds(0.5f);
+        shopKeeperPanel.SetActive(false);
+        dialoguePanel.SetActive(true);
+        dialogueBoxAnimator.SetBool("IsOpen", true);
+        dialoguePanel.SetActive(true);
+        dialogueBoxAnimator.SetBool("IsOpen", true);
+        nameText.text = currentDialogue.name;
+        sentences.Clear();
+        sentences.Enqueue(currentDialogue.ShopKeeperSentence);
+
+        DisplayNextSentence();
     }
 }

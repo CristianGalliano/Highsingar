@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
     void Start()
     {
         //#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
-        //    M_ControlsPanel.gameObject.SetActive(false);
+        //   M_ControlsPanel.gameObject.SetActive(false);
         //#endif
 
         OrthographicSize = CalculateDefaultOrthographicSize(TestPathGeneration.PathGenerator.GridSize);

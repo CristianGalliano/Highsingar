@@ -9,6 +9,11 @@ public class Dialogue
     [TextArea(3, 10)]
     public string[] sentences;
 
+    [TextArea(3, 10)]
+    public string ShopKeeperSentence;
+    [TextArea(3, 10)]
+    public string QuestGiverSentence;
+
     [Header("NPC Type")]
     public bool IsShopKeeper;
     public bool IsQuestGiver;
