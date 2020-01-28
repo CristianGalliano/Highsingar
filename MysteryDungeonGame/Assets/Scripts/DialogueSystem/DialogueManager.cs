@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [Header("User Interface Hooks")]
-    public Text nameText;
-    public Text dialogueText;
-    public GameObject dialoguePanel;
-    public GameObject shopKeeperPanel;
+    [SerializeField] private Text nameText;
+    [SerializeField] private Text dialogueText;
+    [SerializeField] private GameObject dialoguePanel;
+    [SerializeField] private GameObject shopKeeperPanel;
+    [SerializeField] private GameObject M_ControlsPanel;
 
     private Animator dialogueBoxAnimator;
     private Animator shopKeeperPanelAnimator;
+    private Animator m_ControlsPanelAnimator;
     private Queue<string> sentences;
     private Dialogue currentDialogue;
 
@@ -24,11 +26,19 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
         dialogueBoxAnimator = dialoguePanel.GetComponent<Animator>();
         shopKeeperPanelAnimator = shopKeeperPanel.GetComponent<Animator>();
+        m_ControlsPanelAnimator = M_ControlsPanel.GetComponent<Animator>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         PlayerHubMovement.HubPlayer.canMove = false;
+        StartCoroutine(StartDialogueUI(dialogue));
+    }
+
+    IEnumerator StartDialogueUI(Dialogue dialogue)
+    {
+        m_ControlsPanelAnimator.SetBool("IsOpen", false);
+        yield return new WaitForSeconds(0.5f);
         closingShop = false;
         currentDialogue = dialogue;
         dialoguePanel.SetActive(true);
@@ -72,10 +82,16 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Finished Conversation.");
     }
 
+    public void QuickEndDialogue()
+    {
+        StartCoroutine(QuickCloseDialogueUI());
+        Debug.Log("Finished Conversation early.");
+    }
+
     IEnumerator CloseDialogueUI()
     {
         dialogueBoxAnimator.SetBool("IsOpen", false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1 / 3f);
         dialoguePanel.SetActive(false);
         if (currentDialogue.IsShopKeeper && !closingShop)
         {
@@ -84,8 +100,20 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            m_ControlsPanelAnimator.SetBool("IsOpen", true);
+            yield return new WaitForSeconds(0.5f);
             PlayerHubMovement.HubPlayer.canMove = true;
         }
+    }
+
+    IEnumerator QuickCloseDialogueUI()
+    {
+        dialogueBoxAnimator.SetBool("IsOpen", false);
+        yield return new WaitForSeconds(1 / 3f);
+        dialoguePanel.SetActive(false);
+        m_ControlsPanelAnimator.SetBool("IsOpen", true);
+        yield return new WaitForSeconds(0.5f);
+        PlayerHubMovement.HubPlayer.canMove = true;
     }
 
     public void ShopClosedDialogue()
@@ -99,8 +127,6 @@ public class DialogueManager : MonoBehaviour
         shopKeeperPanelAnimator.SetBool("IsOpen", false);
         yield return new WaitForSeconds(0.5f);
         shopKeeperPanel.SetActive(false);
-        dialoguePanel.SetActive(true);
-        dialogueBoxAnimator.SetBool("IsOpen", true);
         dialoguePanel.SetActive(true);
         dialogueBoxAnimator.SetBool("IsOpen", true);
         nameText.text = currentDialogue.name;

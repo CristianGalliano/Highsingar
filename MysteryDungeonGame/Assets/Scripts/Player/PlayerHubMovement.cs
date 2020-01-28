@@ -80,24 +80,11 @@ public class PlayerHubMovement : MonoBehaviour
 #endif
     }
 
-    private void MovePlayer(int X, int Y)
-    {
-        StartCoroutine(MoveOverSeconds(gameObject, new Vector3Int((int)transform.localPosition.x + X, (int)transform.localPosition.y + Y, (int)transform.localPosition.z), false));
-    }
-
-    public void M_MovePlayerVertical(int Y)
+    public void MovePlayer(int X, int Y)
     {
         if (canMove)
         {
-            StartCoroutine(MoveOverSeconds(gameObject, new Vector3Int((int)transform.localPosition.x, (int)transform.localPosition.y + Y, (int)transform.localPosition.z), false));
-        }
-    }
-
-    public void M_MovePlayerHorizontal(int X)
-    {
-        if (canMove)
-        {
-            StartCoroutine(MoveOverSeconds(gameObject, new Vector3Int((int)transform.localPosition.x + X, (int)transform.localPosition.y, (int)transform.localPosition.z), false));
+            StartCoroutine(MoveOverSeconds(gameObject, new Vector3Int((int)transform.localPosition.x + X, (int)transform.localPosition.y + Y, (int)transform.localPosition.z), false));
         }
     }
 
@@ -133,5 +120,4 @@ public class PlayerHubMovement : MonoBehaviour
             yield return null;
         }
     }
-
 }

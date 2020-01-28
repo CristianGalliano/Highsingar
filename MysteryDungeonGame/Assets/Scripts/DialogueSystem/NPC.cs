@@ -13,7 +13,7 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && playerInRange && PlayerHubMovement.HubPlayer.canInteract)
+        if (Input.GetKeyDown(KeyCode.E) && playerInRange && PlayerHubMovement.HubPlayer.canInteract && PlayerHubMovement.HubPlayer.canMove)
         {
             TriggerDialogue();
             PlayerHubMovement.HubPlayer.canInteract = false;
@@ -71,7 +71,7 @@ public class NPC : MonoBehaviour
     private void OnMouseDown()
     {
 #if UNITY_ANDROID || UNITY_IOS
-        if (playerInRange && PlayerHubMovement.HubPlayer.canInteract)
+        if (playerInRange && PlayerHubMovement.HubPlayer.canInteract && PlayerHubMovement.HubPlayer.canMove)
         {
             TriggerDialogue();
             PlayerHubMovement.HubPlayer.canInteract = false;

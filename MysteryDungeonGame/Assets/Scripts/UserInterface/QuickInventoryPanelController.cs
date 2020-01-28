@@ -10,17 +10,6 @@ public class QuickInventoryPanelController : MonoBehaviour
         StartCoroutine(waitToClose());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnMouseOver()
-    {
-        
-    }
-
     public void OnQuickInventoryButtonClicked()
     {
         Debug.Log("clicked quick inventory panel");
