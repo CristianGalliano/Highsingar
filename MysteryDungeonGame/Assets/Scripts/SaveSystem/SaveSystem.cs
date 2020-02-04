@@ -4,18 +4,20 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
-    public static void SavePlayerData(PlayerMovement player)
+    public static void SavePlayerData()
     {
+        SaveSystemPlayer.elapsedTime = Time.time;
+        SaveSystemPlayer.tempPlayer.timePlayed += SaveSystemPlayer.elapsedTime - SaveSystemPlayer.timeSinceLast;
+        SaveSystemPlayer.timeSinceLast = Time.time;
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/Player.SaveData";
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(player);
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, SaveSystemPlayer.tempPlayer);
         stream.Close();
         Debug.Log("File saved to " + path);
     }
 
-    public static PlayerData LoadPlayerData()
+    public static void LoadPlayerData()
     {
         string path = Application.persistentDataPath + "/Player.SaveData";
         if (File.Exists(path))
@@ -25,12 +27,12 @@ public static class SaveSystem
             PlayerData loadedData =  formatter.Deserialize(stream) as PlayerData;
             stream.Close();
             Debug.Log("File loaded from " + path);
-            return loadedData;
+            SaveSystemPlayer.tempPlayer = loadedData;
         }
         else
         {
-            Debug.LogError("Save file not found in " + path);
-            return null;
+            Debug.LogWarning("Save file not found in " + path);
+            SaveSystemPlayer.tempPlayer = new PlayerData();
         }
     }
 }

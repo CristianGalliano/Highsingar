@@ -10,15 +10,17 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Text dialogueText;
     [SerializeField] private GameObject dialoguePanel;
     [SerializeField] private GameObject shopKeeperPanel;
+    [SerializeField] private GameObject questPanel;
     [SerializeField] private GameObject M_ControlsPanel;
 
     private Animator dialogueBoxAnimator;
     private Animator shopKeeperPanelAnimator;
+    private Animator questPanelAnimator;
     private Animator m_ControlsPanelAnimator;
     private Queue<string> sentences;
     private Dialogue currentDialogue;
 
-    private bool closingShop = false;
+    private bool closingWindow = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
         dialogueBoxAnimator = dialoguePanel.GetComponent<Animator>();
         shopKeeperPanelAnimator = shopKeeperPanel.GetComponent<Animator>();
+        questPanelAnimator = questPanel.GetComponent<Animator>();
         m_ControlsPanelAnimator = M_ControlsPanel.GetComponent<Animator>();
     }
 
@@ -39,7 +42,7 @@ public class DialogueManager : MonoBehaviour
     {
         m_ControlsPanelAnimator.SetBool("IsOpen", false);
         yield return new WaitForSeconds(0.5f);
-        closingShop = false;
+        closingWindow = false;
         currentDialogue = dialogue;
         dialoguePanel.SetActive(true);
         dialogueBoxAnimator.SetBool("IsOpen", true);
@@ -93,10 +96,15 @@ public class DialogueManager : MonoBehaviour
         dialogueBoxAnimator.SetBool("IsOpen", false);
         yield return new WaitForSeconds(1 / 3f);
         dialoguePanel.SetActive(false);
-        if (currentDialogue.IsShopKeeper && !closingShop)
+        if (currentDialogue.IsShopKeeper && !closingWindow)
         {
             shopKeeperPanel.SetActive(true);
             shopKeeperPanelAnimator.SetBool("IsOpen", true);
+        }
+        else if (currentDialogue.IsQuestGiver && !closingWindow)
+        {
+            questPanel.SetActive(true);
+            questPanelAnimator.SetBool("IsOpen", true);
         }
         else
         {
@@ -118,20 +126,27 @@ public class DialogueManager : MonoBehaviour
 
     public void ShopClosedDialogue()
     {
-        StartCoroutine(CloseShopWindow());
+        StartCoroutine(CloseWindow());
     }
 
-    IEnumerator CloseShopWindow()
+    IEnumerator CloseWindow()
     {
-        closingShop = true;
-        shopKeeperPanelAnimator.SetBool("IsOpen", false);
+        closingWindow = true;
+        if (currentDialogue.IsShopKeeper)
+        {
+            shopKeeperPanelAnimator.SetBool("IsOpen", false);
+        }
+        else if (currentDialogue.IsQuestGiver)
+        {
+            questPanelAnimator.SetBool("IsOpen", false);
+        }
         yield return new WaitForSeconds(0.5f);
         shopKeeperPanel.SetActive(false);
         dialoguePanel.SetActive(true);
         dialogueBoxAnimator.SetBool("IsOpen", true);
         nameText.text = currentDialogue.name;
         sentences.Clear();
-        sentences.Enqueue(currentDialogue.ShopKeeperSentence);
+        sentences.Enqueue(currentDialogue.finishingSentence);
 
         DisplayNextSentence();
     }

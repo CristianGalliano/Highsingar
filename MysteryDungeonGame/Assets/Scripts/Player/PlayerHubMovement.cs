@@ -11,7 +11,7 @@ public class PlayerHubMovement : MonoBehaviour
     [HideInInspector] public bool canInteract = true;
 
     private Vector3Int previousPosition;
-    private Vector3Int playerStartPosition = Vector3Int.zero;
+    private Vector3Int playerStartPosition;// = Vector3Int.zero;
     private Vector3Int nextPosition;
 
     [SerializeField] private Animator playerAnimator;
@@ -19,6 +19,8 @@ public class PlayerHubMovement : MonoBehaviour
 
     public Tilemap HubTilemap;
     private List<Vector3Int> availableTiles;
+
+    private int GoldAmount, RewindAmount, RestartAmount, BombAmount;
 
     private void Awake()
     {
@@ -32,9 +34,21 @@ public class PlayerHubMovement : MonoBehaviour
         }
     }
 
+    public void save()
+    {
+        SaveSystem.SavePlayerData();
+        Debug.Log("Playtime: " + SaveSystemPlayer.tempPlayer.timePlayed);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        GoldAmount = SaveSystemPlayer.tempPlayer.goldAmount;
+        RewindAmount = SaveSystemPlayer.tempPlayer.restartAmount;
+        RestartAmount = SaveSystemPlayer.tempPlayer.restartAmount;
+        BombAmount = SaveSystemPlayer.tempPlayer.bombAmount;
+
+        playerStartPosition = new Vector3Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)gameObject.transform.position.z);
         gameObject.transform.position = playerStartPosition;
         availableTiles = new List<Vector3Int>();
         foreach (Vector3Int position in HubTilemap.cellBounds.allPositionsWithin)

@@ -10,9 +10,7 @@ public class Dialogue
     public string[] sentences;
 
     [TextArea(3, 10)]
-    public string ShopKeeperSentence;
-    [TextArea(3, 10)]
-    public string QuestGiverSentence;
+    public string finishingSentence;
 
     [Header("NPC Type")]
     public bool IsShopKeeper;

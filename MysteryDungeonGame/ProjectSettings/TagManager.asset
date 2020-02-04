@@ -38,8 +38,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: TIleMap
+    uniqueID: 2576504035
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: NPC
+    uniqueID: 3642403317
     locked: 0
   - name: UserInterface
     uniqueID: 3207639163

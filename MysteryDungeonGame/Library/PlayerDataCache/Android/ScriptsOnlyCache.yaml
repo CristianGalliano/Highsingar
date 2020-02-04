@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - DialogueManager
+    - GameController
     - HeldButtonScript
     - ItemEntry
     - NPC
@@ -9,6 +10,7 @@ ScriptsOnlyBuild:
     - PlayerMovement
     - QuickInventoryPanelController
     - SetOrderInLayer
+    - StartLevelButton
     - TestPathGeneration
     - UIController
     Unity.2D.Tilemap.Editor.dll:
@@ -61,8 +63,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 74
       Script: {instanceID: 0}
     - Class: 81
@@ -84,21 +84,21 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11606}
     - Class: 114
-      Script: {instanceID: 12086}
+      Script: {instanceID: 11926}
     - Class: 114
-      Script: {instanceID: 12430}
+      Script: {instanceID: 12090}
     - Class: 114
-      Script: {instanceID: 12574}
+      Script: {instanceID: 12434}
     - Class: 114
-      Script: {instanceID: 13098}
+      Script: {instanceID: 12578}
     - Class: 114
-      Script: {instanceID: 13142}
+      Script: {instanceID: 13102}
     - Class: 114
-      Script: {instanceID: 13604}
+      Script: {instanceID: 13146}
     - Class: 114
-      Script: {instanceID: 13638}
+      Script: {instanceID: 13608}
     - Class: 114
-      Script: {instanceID: 15466}
+      Script: {instanceID: 13642}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -134,6 +134,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
     - Class: 61
@@ -161,29 +163,33 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11566}
     - Class: 114
-      Script: {instanceID: 11930}
+      Script: {instanceID: 11684}
     - Class: 114
-      Script: {instanceID: 11956}
+      Script: {instanceID: 11926}
     - Class: 114
-      Script: {instanceID: 12086}
+      Script: {instanceID: 11934}
     - Class: 114
-      Script: {instanceID: 12238}
+      Script: {instanceID: 11960}
     - Class: 114
-      Script: {instanceID: 12268}
+      Script: {instanceID: 12090}
     - Class: 114
-      Script: {instanceID: 12336}
+      Script: {instanceID: 12242}
     - Class: 114
-      Script: {instanceID: 12574}
+      Script: {instanceID: 12272}
     - Class: 114
-      Script: {instanceID: 12662}
+      Script: {instanceID: 12340}
     - Class: 114
-      Script: {instanceID: 13142}
+      Script: {instanceID: 12578}
     - Class: 114
-      Script: {instanceID: 13604}
+      Script: {instanceID: 12666}
     - Class: 114
-      Script: {instanceID: 15466}
+      Script: {instanceID: 13146}
     - Class: 114
-      Script: {instanceID: 74622}
+      Script: {instanceID: 13608}
+    - Class: 114
+      Script: {instanceID: 38054}
+    - Class: 114
+      Script: {instanceID: 39910}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -245,12 +251,6 @@ ScriptsOnlyBuild:
     className: TMP_ScrollbarEventHandler
   - hash:
       serializedVersion: 2
-      Hash: 793bf72ed81356caf5d34e883d41f4bd
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Node
-  - hash:
-      serializedVersion: 2
       Hash: 04e4a8b0447477cc4e933d9e5311188f
     assemblyName: UnityEngine.XR.LegacyInputHelpers.dll
     namespaceName: UnityEngine.XR.LegacyInputHelpers
@@ -263,7 +263,7 @@ ScriptsOnlyBuild:
     className: GroupTrack
   - hash:
       serializedVersion: 2
-      Hash: ebf395e01348175b833dfb7546f5a141
+      Hash: 6b07790dea810afc0cdbb576a5d9cb2d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DialogueManager
@@ -339,6 +339,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: GridLayoutGroup
+  - hash:
+      serializedVersion: 2
+      Hash: 6c47c7264498ae1c2137391d9ceb9783
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SetOrderInLayer
   - hash:
       serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
@@ -417,6 +423,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: AnimationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: 0d92f6ec8ec98f909b77fc905b55229d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HeldButtonScript
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -503,7 +515,7 @@ ScriptsOnlyBuild:
     className: ItemEntry
   - hash:
       serializedVersion: 2
-      Hash: 8e8344fe5e7f218423621064d649c026
+      Hash: eb8912ec7ad0de357ac20ac2027bf562
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NPC
@@ -839,16 +851,16 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: 0d92f6ec8ec98f909b77fc905b55229d
+      Hash: 39ecb872dc9b585a68e049bb8924bbd9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: HeldButtonScript
+    className: StartLevelButton
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: SetOrderInLayer
+    className: GameController
   platform: 13
   scenePathNames:
   - Assets/Scenes/PlayerHub.unity

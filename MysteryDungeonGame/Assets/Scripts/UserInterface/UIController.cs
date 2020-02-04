@@ -17,9 +17,9 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //#if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
-        //   M_ControlsPanel.gameObject.SetActive(false);
-        //#endif
+        #if UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR_LINUX
+           M_ControlsPanel.gameObject.SetActive(false);
+        #endif
 
         OrthographicSize = CalculateDefaultOrthographicSize(TestPathGeneration.PathGenerator.GridSize);
         MainCamera.orthographicSize = OrthographicSize;
