@@ -35,4 +35,13 @@ public static class SaveSystem
             SaveSystemPlayer.tempPlayer = new PlayerData();
         }
     }
+
+    public static void ClearSavedData()
+    {
+        string path = Application.persistentDataPath + "/Player.SaveData";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+    }
 }

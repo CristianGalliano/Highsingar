@@ -21,12 +21,22 @@ public class NPC : MonoBehaviour
 
         if (playerInRange && PlayerHubMovement.HubPlayer.canInteract)
         {
+#if UNITY_ANDROID || UNITY_IOS
+            StopAllCoroutines();
+            StartCoroutine(openMobileInteractionprompt());
+#else
             interactionPromptObject.SetActive(true);
             interactionAnimator.SetBool("InRange", true);
+#endif
         }
         else if (playerInRange && !PlayerHubMovement.HubPlayer.canInteract)
         {
+#if UNITY_ANDROID || UNITY_IOS
+            StopAllCoroutines();
+            StartCoroutine(closeMobileInteractionprompt());
+#else
             StartCoroutine(closeInteractionPrompt());
+#endif
         }
     }
 
@@ -40,8 +50,13 @@ public class NPC : MonoBehaviour
         Debug.Log("someone entered the trigger");
         if (collision.gameObject.CompareTag("Player"))
         {
+#if UNITY_ANDROID || UNITY_IOS
+            StopAllCoroutines();
+            StartCoroutine(openMobileInteractionprompt());
+#else
             interactionPromptObject.SetActive(true);
-            interactionAnimator.SetBool("InRange", true);
+            interactionAnimator.SetBool("InRange", true);           
+#endif
             playerInRange = true;
         }
     }
@@ -51,7 +66,12 @@ public class NPC : MonoBehaviour
         Debug.Log("someone left the trigger");
         if (collision.gameObject.CompareTag("Player"))
         {
+#if UNITY_ANDROID || UNITY_IOS
+            StopAllCoroutines();
+            StartCoroutine(closeMobileInteractionprompt());
+#else
             StartCoroutine(closeInteractionPrompt());
+#endif
             playerInRange = false;
             PlayerHubMovement.HubPlayer.canInteract = true;
         }
@@ -77,5 +97,37 @@ public class NPC : MonoBehaviour
             PlayerHubMovement.HubPlayer.canInteract = false;
         }
 #endif
+    }
+
+    IEnumerator openMobileInteractionprompt()
+    {
+        float elapsedTime = 0;
+        float DesiredValue = 1.35f;
+
+        Material mat =  gameObject.GetComponentInChildren<SpriteRenderer>().material;
+        float value = mat.GetFloat("_OutlineThickness");
+        while (elapsedTime < (1f / 6f))
+        {
+            mat.SetFloat("_OutlineThickness", Mathf.Lerp(value, DesiredValue, (elapsedTime / (1f / 10f))));
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        mat.SetFloat("_OutlineThickness", DesiredValue);
+    }
+
+    IEnumerator closeMobileInteractionprompt()
+    {    
+        float elapsedTime = 0;
+        float DesiredValue = 0;
+
+        Material mat = gameObject.GetComponentInChildren<SpriteRenderer>().material;
+        float value = mat.GetFloat("_OutlineThickness");
+        while (elapsedTime < (1f / 6f))
+        {
+            mat.SetFloat("_OutlineThickness", Mathf.Lerp(value, DesiredValue, (elapsedTime / (1f / 10f))));
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        mat.SetFloat("_OutlineThickness", DesiredValue);
     }
 }

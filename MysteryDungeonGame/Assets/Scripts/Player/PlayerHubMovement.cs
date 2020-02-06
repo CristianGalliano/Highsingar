@@ -34,19 +34,13 @@ public class PlayerHubMovement : MonoBehaviour
         }
     }
 
-    public void save()
-    {
-        SaveSystem.SavePlayerData();
-        Debug.Log("Playtime: " + SaveSystemPlayer.tempPlayer.timePlayed);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         GoldAmount = SaveSystemPlayer.tempPlayer.goldAmount;
         RewindAmount = SaveSystemPlayer.tempPlayer.restartAmount;
         RestartAmount = SaveSystemPlayer.tempPlayer.restartAmount;
-        BombAmount = SaveSystemPlayer.tempPlayer.bombAmount;
+        BombAmount = SaveSystemPlayer.tempPlayer.dynamiteAmount;
 
         playerStartPosition = new Vector3Int((int)gameObject.transform.position.x, (int)gameObject.transform.position.y, (int)gameObject.transform.position.z);
         gameObject.transform.position = playerStartPosition;

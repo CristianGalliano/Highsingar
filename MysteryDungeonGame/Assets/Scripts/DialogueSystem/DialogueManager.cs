@@ -19,7 +19,6 @@ public class DialogueManager : MonoBehaviour
     private Animator m_ControlsPanelAnimator;
     private Queue<string> sentences;
     private Dialogue currentDialogue;
-
     private bool closingWindow = false;
 
     // Start is called before the first frame update
@@ -146,8 +145,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBoxAnimator.SetBool("IsOpen", true);
         nameText.text = currentDialogue.name;
         sentences.Clear();
-        sentences.Enqueue(currentDialogue.finishingSentence);
-
+        sentences.Enqueue(currentDialogue.finishingSentence);        
         DisplayNextSentence();
     }
 }

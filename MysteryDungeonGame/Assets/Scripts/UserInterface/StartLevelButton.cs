@@ -20,6 +20,7 @@ public class StartLevelButton : MonoBehaviour
     {
         SaveSystemPlayer.loadedLevel = DesiredLevelText;
         SaveSystemPlayer.gridSize = LevelGridSize;
+        SaveSystem.SavePlayerData();
         SceneManager.LoadScene(1);
     }
 
